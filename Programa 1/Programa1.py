@@ -1100,13 +1100,17 @@ class Ui_MainWindow(object):
             SubLote.append(TME)
             Lotes.append(SubLote)
             self.lineEdit_3.clear()
-            self.lineEdit_4.clear()
-            self.lineEdit_5.clear()
-            self.lineEdit_6.clear()
             self.lineEdit_3.setStyleSheet("border-bottom:2px solid rgb(225, 131, 0);")
+            self.aMimir3()
+            self.lineEdit_4.clear()
             self.lineEdit_4.setStyleSheet("border-bottom:2px solid rgb(225, 131, 0);")
+            self.aMimir3()
+            self.lineEdit_5.clear()
             self.lineEdit_5.setStyleSheet("border-bottom:2px solid rgb(225, 131, 0);")
+            self.aMimir3()
+            self.lineEdit_6.clear()
             self.lineEdit_6.setStyleSheet("border-bottom:2px solid rgb(225, 131, 0);")
+            self.aMimir3()
             ContadorMinioms+=1
             if ContadorMinioms%4==1:
                 self.pushButton_4.setStyleSheet("background-color:rgb(225,131,0);")
@@ -1119,6 +1123,7 @@ class Ui_MainWindow(object):
                 self.pushButton_6.setStyleSheet("background-color:rgb(225,131,0);")
             else:
                 self.pushButton_5.setStyleSheet("background-color:rgb(225,131,0);")
+            self.aMimir2()
             if Programadores==ContadorMinioms:
                 self.stackedWidget.setCurrentWidget(self.page_Procesos)
                 self.lineEdit_3.setReadOnly(True)
@@ -1137,6 +1142,10 @@ class Ui_MainWindow(object):
     def aMimir2(self):
         loop = QtCore.QEventLoop()
         QtCore.QTimer.singleShot(567, loop.quit)
+        loop.exec_()
+    def aMimir3(self):
+        loop = QtCore.QEventLoop()
+        QtCore.QTimer.singleShot(100, loop.quit)
         loop.exec_()
     def ProcesarDatos(self,x):
         inicio=default_timer()
