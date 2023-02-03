@@ -15,7 +15,7 @@ Thursday, February 8, 2023
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from timeit import default_timer
-import time, re
+import re
 
 #Variables Globales
 Programadores=0
