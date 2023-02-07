@@ -1198,6 +1198,7 @@ class Ui_MainWindow(object):
                             ContadorMinioms2+=1
         BanderaProcesos=True
         self.pushButton_8.setStyleSheet("QPushButton{border:2px solid#ff8300}\nQPushButton:Hover{border:2px solid#ffffff}")
+        self.lineEdit_22.setStyleSheet("border:2px solid rgb(0, 255, 0);")
     
     #PaginaFinalizados
     def ProcesosFinalizados(self,Pos,ID,Operacion):
@@ -1280,6 +1281,7 @@ class Ui_MainWindow(object):
             
             self.tableWidget.setRowCount(0)
             self.lineEdit_22.clear()
+            self.lineEdit_22.setStyleSheet("border:2px solid rgb(225, 131, 0);")
             
             self.stackedWidget.setCurrentWidget(self.page_Asignar)
         else:
