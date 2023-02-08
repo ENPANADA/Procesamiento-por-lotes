@@ -28,9 +28,12 @@ BanderaID=False
 BanderaNombre=False
 BanderaOperacion=False
 BanderaTME=False
+mouse_click=0
+grip=0
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        global grip
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1100, 600)
         MainWindow.setMinimumSize(QtCore.QSize(1100, 600))
@@ -870,6 +873,14 @@ class Ui_MainWindow(object):
         self.lineEdit_6.textChanged.connect(lambda: self.ValidarTME())
         #PaginaProcesos
         self.pushButton_8.clicked.connect(lambda: self.RestablecerValores())
+        #Mover ventana
+        self.frame_superior.mouseMoveEvent = self.MoverVentana
+        self.frame_superior.mousePressEvent = self.GetMousePos
+        #Creacion de SizeGrip
+        grip=QtWidgets.QSizeGrip(MainWindow)
+        grip.resize(20, 20)
+        #Acomodo de SizeGrip
+        MainWindow.resizeEvent = self.RedimencionarVentana
         
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1286,6 +1297,24 @@ class Ui_MainWindow(object):
             self.stackedWidget.setCurrentWidget(self.page_Asignar)
         else:
             self.pushButton_8.setStyleSheet("border:2px solid red")
+    def GetMousePos(self,event):
+        global mouse_click
+        mouse_click = event.globalPos()
+    def MoverVentana(self,event):
+        global mouse_click
+        if not MainWindow.isMaximized():
+            if event.buttons() == QtCore.Qt.LeftButton:
+                MainWindow.move(MainWindow.pos() + event.globalPos() - mouse_click)
+                mouse_click = event.globalPos()
+                event.accept()
+        if event.globalPos().y() <= 10:
+            MainWindow.showMaximized()
+        else:
+            MainWindow.showNormal()
+    def RedimencionarVentana(self,event):
+        global grip
+        rect = MainWindow.rect()
+        grip.move(rect.right()-20, rect.bottom()-20)
             
 if __name__ == "__main__":
     import sys
