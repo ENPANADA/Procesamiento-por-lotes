@@ -1,4 +1,4 @@
-# Seminario de Sistemas Operativos
+# 🥵Seminario de Sistemas Operativos🥵
 Procesamiento por Lotes
 # Programa 1
 Simular el Procesamiento por Lotes
