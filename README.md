@@ -1,5 +1,6 @@
 # 🥵Seminario de Sistemas Operativos🥵
-Procesamiento por Lotes
+-Procesamiento por Lotes
+![Uploading cj-dance.gif…]()
 ### Programa 1
 - Simular el Procesamiento por Lotes
 ### Programa 2
