@@ -5,4 +5,5 @@ Procesamiento por Lotes
 - Simular el Procesamiento por Lotes
 ### Programa 2
 - Simular el procesamiento por lotes con Multiprogramación
-
+### Programa 3
+- Algoritmo de planificación FCFS (First Come First Server)
