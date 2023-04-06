@@ -4,8 +4,8 @@
 
 '''
 Seminario de Sistemas Operativos - D02
-    Actividad de Aprendizaje 12
-Programa 6. Productor-Consumidor
+Actividad de Aprendizaje 12
+    Programa 6. Productor-Consumidor
 Integrantes:
     Saul Alejandro Castañeda Perez
     Daniel Martinez Martinez
@@ -15,9 +15,22 @@ Friday, April 28, 2023
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import threading
+import time
+import random
 #Variables Globales
 mouse_click=0
 grip=0
+
+#Variables globales del algoritmo
+# Creamos una cola compartida para que el productor y el consumidor la utilicen
+shared_queue = ['🍆'] * 22
+#Creamos una variale que funje como el indice donde se han ido poniendo hamburguesas
+indice=0
+#Creamos un segundo indice para llevar seguimiento a la puesta de berenjenas (donde nos quedamos)
+indice2=0
+# Creamos un objeto Event
+stop_event = threading.Event()
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -210,7 +223,7 @@ class Ui_MainWindow(object):
         self.Contenedor_1 = QtWidgets.QLabel(self.Contenido)
         self.Contenedor_1.setMinimumSize(QtCore.QSize(50, 50))
         self.Contenedor_1.setMaximumSize(QtCore.QSize(50, 50))
-        self.Contenedor_1.setStyleSheet("image: url(:/PC/cangreburger.png);")
+        self.Contenedor_1.setStyleSheet(";")
         self.Contenedor_1.setText("")
         self.Contenedor_1.setAlignment(QtCore.Qt.AlignCenter)
         self.Contenedor_1.setObjectName("Contenedor_1")
@@ -218,7 +231,7 @@ class Ui_MainWindow(object):
         self.Contenedor_2 = QtWidgets.QLabel(self.Contenido)
         self.Contenedor_2.setMinimumSize(QtCore.QSize(50, 50))
         self.Contenedor_2.setMaximumSize(QtCore.QSize(50, 50))
-        self.Contenedor_2.setStyleSheet("image: url(:/PC/cangreburger.png);")
+        self.Contenedor_2.setStyleSheet(';')
         self.Contenedor_2.setText("")
         self.Contenedor_2.setAlignment(QtCore.Qt.AlignCenter)
         self.Contenedor_2.setObjectName("Contenedor_2")
@@ -226,7 +239,7 @@ class Ui_MainWindow(object):
         self.Contenedor_3 = QtWidgets.QLabel(self.Contenido)
         self.Contenedor_3.setMinimumSize(QtCore.QSize(50, 50))
         self.Contenedor_3.setMaximumSize(QtCore.QSize(50, 50))
-        self.Contenedor_3.setStyleSheet("image: url(:/PC/cangreburger.png);")
+        self.Contenedor_3.setStyleSheet(";")
         self.Contenedor_3.setText("")
         self.Contenedor_3.setAlignment(QtCore.Qt.AlignCenter)
         self.Contenedor_3.setObjectName("Contenedor_3")
@@ -434,17 +447,18 @@ class Ui_MainWindow(object):
         grip=QtWidgets.QSizeGrip(MainWindow)
         grip.resize(20, 20)
         #Acomodo de SizeGrip
-        MainWindow.resizeEvent = self.RedimencionarVentana
+        MainWindow.resizeEvent = self.RedimensionarVentana
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Productor-Consumidor"))
         self.Ocultar.setText(_translate("MainWindow", "Ocultar"))
         self.Titulo.setText(_translate("MainWindow", "Productor-Consumidor"))
-        self.descripcion1.setText(_translate("MainWindow", "Durmiendo..."))
-        self.descripcion2.setText(_translate("MainWindow", "Durmiendo..."))
+        self.descripcion1.setText(_translate("MainWindow", "Durmiendo"))
+        self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))
         self.Ocultar_2.setText(_translate("MainWindow", "Comenzar"))
         
+
     #Funciones
     def MostrarMenu(self):
         if self.MenuDesplegable.isHidden():
@@ -466,20 +480,169 @@ class Ui_MainWindow(object):
     def OcultarMenu(self):
         self.MenuDesplegable.hide()
         self.BotonMenu.setMinimumSize(QtCore.QSize(50, 40))
+        
+    #Retardo para poder apreciar los cambios progresivamente    
+    def Retardo(self,time):
+        loop = QtCore.QEventLoop()
+        QtCore.QTimer.singleShot(time, loop.quit)
+        loop.exec_()   
+        
+    #Aqui comienza la logica del programa
+    """Funciones Auxiliares"""
+    #Esta funcion define si la lista esta llena, dado la no existencia de berenejas indicaria que no hay espacios libres
+    def HayBerenjenas(self):
+        global shared_queue
+        try:
+            return shared_queue.index('🍆')
+        except:
+            return -1
+    #Esta funcion define si la lista esta vacia, dado que no encontrar alguna hamburguesa significaria que esta vacia    
+    def HayAnvorguesas(self):
+        global shared_queue
+        try:
+            return shared_queue.index('🍔')
+        except:
+            return -1    
+        
+    """
+    Aqui buscamos la posicion desde donde empezaremos a consumir, localizando donde comienzan las 
+    hamburguesas despues de los espacios vacios   |comenzamos de aqui
+                                                  v
+                      🍔🍔🍔🍔🍔🍆🍆🍆🍆🍆🍆🍔🍔🍔🍔
+    """
+    def indice2Inicial(self):
+        global shared_queue,indice
+        try:
+            #Comenzamos a buscar asumiendo que se colocaron hamburguesas en el inicio por la circularidad
+            indiceAux=shared_queue.index('🍆')
+            return shared_queue.index('🍔',indiceAux)
+        except:
+            try:
+                #En caso de que no se encontrara ninguna hamburguesa de la forma anterior, ahora si buscamos alguna desde el inicio
+                return shared_queue.index('🍔',0)
+            except:
+                return indice
+    # Creamos una variable de condición para que el productor espere cuando la cola esté llena
+    condition = threading.Condition()
+    
+    # Definimos una función para el productor que agregará elementos a la cola compartida
+    def producer(self,stop_event):
+        global indice
+        while not stop_event.is_set():
+            # Esperamos un tiempo aleatorio antes de producir un elemento
+            time.sleep(2)
+            
+            # Consideramos una cantidad aleatoria de elementos a agregar a la cola
+            numeroItems = random.randint(1, 6)
+            
+            # Bloqueamos la cola compartida con la variable de condición
+            with self.condition:
+                # Si la cola está llena, esperamos a que se vacíe un espacio
+                while (self.HayBerenjenas()) == -1:
+                    self.condition.wait()
+                _translate = QtCore.QCoreApplication.translate
+                self.descripcion1.setStyleSheet('border: 2px solid rgb(0, 255, 0);')
+                self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))  
+                self.descripcion2.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                # Agregamos los N items a la cola
+                for i in range (numeroItems):
+                    #En caso de que haya una hamburguesa en el indice actual, terminamos de colocar
+                    #hamburguesas, dado que esto indicaria que ya está llena la cola
+                    if (shared_queue[indice]=='🍔') or stop_event.is_set():
+                        self.descripcion1.setText(_translate("MainWindow", "Intentando\nproducir"))
+                        self.descripcion1.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
+                        time.sleep(2)
+                        break
+                    #Cambiamos una apestosa berenjena por una deliciosa cangreburguer
+                    shared_queue[indice]='🍔'
+                    self.descripcion1.setText(_translate("MainWindow", "Produciendo ({})").format(numeroItems-i-1))
+                    operacion="self.Contenedor_"+str(indice+1)+".setStyleSheet('image: url(:/PC/cangreburger.png);border: 2px solid rgb(0,255,0);')"
+                    eval(operacion)
+                    self.Retardo(1000)
+                    operacion="self.Contenedor_"+str(indice+1)+".setStyleSheet('image: url(:/PC/cangreburger.png);border: 2px solid rgb(225, 131, 0);')"
+                    eval(operacion)
+                    #Incrementamos el indice
+                    indice=indice+1
+                    #Consideramos circularidad
+                    if indice==22:
+                        indice=0
+                # Notificamos a los threads en espera que la cola ha cambiado
+                self.condition.notify_all()
+             
+
+    # Definimos una función para el consumidor que quitará elementos de la cola compartida
+    def consumer(self,stop_event):
+        global indice2,indice
+        while not stop_event.is_set():
+            # Esperamos un tiempo aleatorio antes de intentar consumir un elemento
+            time.sleep(2)
+            
+            # Consideramos una cantidad aleatoria de elementos a quitar de la cola
+            numeroItems = random.randint(1, 6)
+            
+            # Bloqueamos la cola compartida con la variable de condición
+            with self.condition:
+                # Si la cola está vacía, esperamos a que se agregue un elemento
+                while (self.HayAnvorguesas()) == -1:
+                    _translate = QtCore.QCoreApplication.translate
+                    self.descripcion2.setText(_translate("MainWindow", "Intentando\nconsumir"))
+                    self.descripcion2.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
+                    time.sleep(2)
+                    self.condition.wait()
+                    
+                # Liberamos espacios de la cola, reemplazando las hamburguesas con berenjenas
+                #Comenzamos a colocar berenjenas donde nos habiamos quedado
+                _translate = QtCore.QCoreApplication.translate
+                self.descripcion1.setText(_translate("MainWindow", "Durmiendo"))
+                self.descripcion1.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                self.descripcion2.setText(_translate("MainWindow", "Consumiendo"))
+                self.descripcion2.setStyleSheet('border: 2px solid rgb(0, 255, 255);')
+                if((self.HayBerenjenas()) == -1):
+                    indice2=indice
+                else:
+                    indice2=self.indice2Inicial()
+                for i in range (numeroItems):
+                    #SI de donde estamos ya hay una berenjena, nos detenemos, dado que esto significa que
+                    #No hay kangreburguers para consumir
+                    if (shared_queue[indice2]=='🍆' or stop_event.is_set()):
+                        self.descripcion2.setText(_translate("MainWindow", "Intentando\nconsumir"))
+                        self.descripcion2.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
+                        time.sleep(2)
+                        break
+                    #Cambiamos una hamburguesa por una sucia berenjena
+                    shared_queue[indice2]='🍆'
+                    self.descripcion2.setText(_translate("MainWindow", "Consumiendo ({})").format(numeroItems-i-1))
+                    operacion="self.Contenedor_"+str(indice2+1)+".setStyleSheet('border: 2px solid rgb(0, 255, 255);')"
+                    eval(operacion)
+                    self.Retardo(1000)
+                    operacion="self.Contenedor_"+str(indice2+1)+".setStyleSheet('border: 2px solid rgb(225, 131, 0);')"
+                    eval(operacion)
+                    #Incrementamos el indice para continuar a la siguiente posicion de la lista
+                    indice2=indice2+1
+                    #Consideramos la circularidad
+                    if indice2==22:
+                        indice2=0
+                # Notificamos a los threads en espera que la cola ha cambiado
+                self.condition.notify_all()
+    
     #Ejecucion del programa
     def CorrerAlgoritmo(self):
-        print('hola :)')
-        #Ejemplo para poner imajen: self.Personaje2.setStyleSheet("image: url(:/PC/pez promedio.png);")
-        #Ejemplo para quitar imajen: self.Personaje2.setStyleSheet(";")
-        
-        #A chingarle :)
-        
+        global bnd,stop_event
+        # Creamos los threads para el productor y el consumidor
+        producer_thread = threading.Thread(target=self.producer, args=(stop_event,))
+        consumer_thread = threading.Thread(target=self.consumer, args=(stop_event,))
+
+        # Iniciamos los threads
+        producer_thread.start()
+        consumer_thread.start()
         
         
     #Funciones extra
     def CapturarTeclas(self,event):
+        global bnd,stop_event
         if event.key()==QtCore.Qt.Key_Escape:
-            print('tecla esc precionada')
+            print("ESC PRESIONADA")
+            stop_event.set()
     def GetMousePos(self,event):
         global mouse_click
         mouse_click = event.globalPos()
@@ -494,11 +657,10 @@ class Ui_MainWindow(object):
             MainWindow.showMaximized()
         else:
             MainWindow.showNormal()
-    def RedimencionarVentana(self,event):
+    def RedimensionarVentana(self,event):
         global grip
         rect = MainWindow.rect()
         grip.move(rect.right()-20, rect.bottom()-20)
-
 
 import Imagenes
 
@@ -510,4 +672,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
