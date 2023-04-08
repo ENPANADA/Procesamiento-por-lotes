@@ -1,7 +1,7 @@
-# :hot_face:Seminario de Sistemas Operativos:hot_face:
-
-![cj-dance](https://user-images.githubusercontent.com/92269511/217409180-695771e3-6c8c-4150-8669-c933a0676868.gif)
-
+## Seminario de Sistemas Operativos
+<!--
+![Cj bailando reggaeton](https://user-images.githubusercontent.com/92269511/217409180-695771e3-6c8c-4150-8669-c933a0676868.gif)
+-->
 | Programas | Descripcion |
 | --- | --- |
 | Programa 1 | Simular el Procesamiento por Lotes |
@@ -14,11 +14,25 @@
 | Programa 8 | Procesos suspendidos |
 | Extra 1 | PLANIFICADOR MULTIPLES COLAS (FCFS y SRT) |
 
-#### Convertir archivo UI a Python
+***Color Primario*** `rgb(225, 131, 0)`
+
+***Convertir archivo UI a Python 🤙***
 ```Python
 pyuic5 -x InputFileName.ui -o OutputFileName.py
 ```
-#### Convertir archivo QRC a Python
+***Convertir archivo QRC a Python 🤙***
 ```Python
 pycc5 InputFileName.qrc -o OutputFileName.py
 ```
+---
+> ***Tecnoloigas usadas***
+>> - **Python** ( Anaconda/ Spyder) ❤️
+>> - **Qt Designer** ( PyQT 5 ) ❤️
+>
+> ***Colaboradores***
+>> - 👎
+>> - 👍
+---
+***Actividades realizadas: [Portafolio de evidencias](https://null/)👌.***
+
+[☝️ Ir arriba ☝️](#seminario-de-sistemas-operativos)
