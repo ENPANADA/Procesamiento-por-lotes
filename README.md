@@ -22,7 +22,7 @@ pyuic5 -x InputFileName.ui -o OutputFileName.py
 ```
 ***Convertir archivo QRC a Python 🤙***
 ```Python
-pycc5 InputFileName.qrc -o OutputFileName.py
+pyrcc5 InputFileName.qrc -o OutputFileName_rc.py
 ```
 ---
 > ***Tecnoloigas usadas***
