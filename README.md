@@ -11,3 +11,11 @@ Procesamiento por Lotes
 - Algoritmo de planificación FCFS (First Come First Server) Continuacion
 ### Extra 1
 - PLANIFICADOR MULTIPLES COLAS (FCFS y SRT)
+#### Convertir archivo UI a Python
+```Python
+pyuic5 -x InputFileName.ui -o OutputFileName.py
+```
+#### Convertir archivo QRC a Python
+```Python
+pycc5 InputFileName.qrc -o OutputFileName.py
+```
