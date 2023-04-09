@@ -24,15 +24,13 @@ pyuic5 -x InputFileName.ui -o OutputFileName.py
 ```Python
 pyrcc5 InputFileName.qrc -o OutputFileName_rc.py
 ```
----
-> ***Tecnoloigas usadas***
->> - **Python** ( Anaconda/ Spyder) ❤️
->> - **Qt Designer** ( PyQT 5 ) ❤️
->
-> ***Colaboradores***
->> - 👎
->> - 👍
----
+>---
+> ***Tecnoloigas usadas 😻***
+>> - **Python**
+>> - **Qt Designer**
+>> - **PyQT5**
+>> - **CSS**
+> ---
 ***Actividades realizadas: [Portafolio de evidencias](https://null/)👌.***
 
 [☝️ Ir arriba ☝️](#seminario-de-sistemas-operativos)
