@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="BN">
+    <file>exportar.png</file>
+    <file>maximizar.png</file>
+    <file>menu.png</file>
+    <file>minimizar.png</file>
+  </qresource>
+</RCC>
