@@ -270,9 +270,9 @@ def DarDeAltaBecario(self):
         item = QtWidgets.QTableWidgetItem(str(self.Lotes[GatasDespachadas][self.getPos['TS']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_5.setItem(self.tableWidget_5.rowCount() - 1, 2, item)
+        self.Lotes[GatasDespachadas][self.getPos['TL']] = self.ContadorGlobal
         self.Lotes[GatasDespachadas][self.getPos['Estado']] = 'Listo'
         PlantarSemilla(self,self.Lotes[GatasDespachadas])
-        
         try:
             self.lineEdit_23.setText('{}'.format(self.Lotes[GatasDespachadas + 1][self.getPos['ID']]))
             self.lineEdit_24.setText('{}'.format(self.Lotes[GatasDespachadas + 1][self.getPos['Tamaño']]))
