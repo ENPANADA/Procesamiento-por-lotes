@@ -380,6 +380,7 @@ def EsclavizarMiniom(self,ProcesoEnEjecucion):
             ProcesoEnEjecucion[self.getPos['Estado']] ='Bloqueado'
             TirarADN(self,ProcesoEnEjecucion,'Bloqueado')
             CaidaAlAnexo(self,ProcesoEnEjecucion[self.getPos['ID']])
+            self.BanderaEjecucion = False
             return True
         self.lineEdit_11.setText(str(time + 1))
         self.lineEdit_12.setText(str(ProcesoEnEjecucion[self.getPos['TME']] - time - 1))
