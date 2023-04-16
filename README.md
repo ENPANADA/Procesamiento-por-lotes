@@ -68,6 +68,6 @@ pyrcc5 InputFileName.qrc -o OutputFileName_rc.py
 >> - **PyQT5**
 >> - **CSS**
 > ---
-***Actividades realizadas: [Portafolio de evidencias](https://null/)👌.***
+***Actividades realizadas: [Portafolio de evidencias](https://enpanada.github.io/Procesamiento_por_lotes/)👌.***
 
 [☝️ Ir arriba ☝️](#seminario-de-sistemas-operativos)
