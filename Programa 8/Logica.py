@@ -156,7 +156,7 @@ def aMimir(self,time):
     loop.exec_()
 def MinitasSecandose(self):
     for Gata in self.Lotes:
-        if Gata[self.getPos['Estado']] == 'Listo' or Gata[self.getPos['Estado']] == 'Bloqueado':
+        if Gata[self.getPos['Estado']] == 'Listo' or Gata[self.getPos['Estado']] == 'Bloqueado' or Gata[self.getPos['Estado']] == 'Suspendido':
             Gata[self.getPos['TE']] += 1
 def CaidaAlAnexo(self, Gil):
     self.tableWidget_2.setRowCount(self.tableWidget_2.rowCount() + 1)
@@ -494,47 +494,45 @@ def LlenarTablaBCP(self):
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 1, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if self.Lotes[i][self.getPos['TL']] != -1 and Estado != 'Suspendido':
+        if self.Lotes[i][self.getPos['TL']] != -1:
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TL']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 2, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if self.Lotes[i][self.getPos['TF']] != -1 and Estado != 'Suspendido':
+        if self.Lotes[i][self.getPos['TF']] != -1:
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TF']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 3, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if self.Lotes[i][self.getPos['TRo']] != -1 and Estado != 'Suspendido':
+        if self.Lotes[i][self.getPos['TRo']] != -1:
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TRo']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 4, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if self.Lotes[i][self.getPos['TRa']] != -1 and Estado != 'Suspendido':
+        if self.Lotes[i][self.getPos['TRa']] != -1:
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TRa']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 5, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if Estado != 'Nuevo' and Estado != 'Suspendido':
+        if Estado != 'Nuevo':
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TE']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 6, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if Estado != 'Nuevo' and Estado != 'Suspendido':
+        if Estado != 'Nuevo':
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TS']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 7, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if Estado != 'Suspendido':
-            item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TME']]))
+        item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['TME']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 8, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if Estado != 'Suspendido':
-            item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['Operacion']]))
+        item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['Operacion']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 9, item)
         item = QtWidgets.QTableWidgetItem('Null')
-        if Estado =='Finalizado' and Estado != 'Suspendido':
+        if Estado =='Finalizado':
             item = QtWidgets.QTableWidgetItem(str(self.Lotes[i][self.getPos['Resultado']]))
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget_3.setItem(i, 10, item)
