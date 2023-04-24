@@ -73,6 +73,44 @@
     }
   ],
 
+  "Investigaciones2": [
+    {
+      "NumActividad": "1",
+      "Titulo": "Archivo por lotes",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "3",
+      "Titulo": "Kbhit",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "5",
+      "Titulo": "Diagrama y transiciones",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "7",
+      "Titulo": "Hilos posix",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "9",
+      "Titulo": "Filósofos, productor, lectores",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "11",
+      "Titulo": "Técnicas memoria",
+      "Descripcion": ""
+    },
+    {
+      "NumActividad": "13",
+      "Titulo": "Criptografía",
+      "Descripcion": ""
+    }
+  ],
+
   "Programas": [
     {
       "Programa": "1",
@@ -131,7 +169,7 @@
       "Descripcion": "Para este programa se agrego el manejo de ficheros para almacenar los procesos suspendidos, los cuales pueden llegar a este estado unicamente cuando estan en la tabla bloqueados y se implemento la captura de 2 nuevas teclas S la cual pone al proceso como suspendido sacandolo del sistema y R la cual recupera el primer proceso suspendido si aplica."
     }
   ],
-  "ConclucionFinal": {
-    "Conclucion": "Un sistema operativo es un software fundamental para el funcionamiento de una computadora ya que se encarga de gestionar los recursos del sistema, permitiendo a los usuarios interactuar con la computadora de manera eficiente y efectiva, entre las principales funciones de un SO se encuentran la gestión de la memoria, la administración del procesamiento y la gestión de los dispositivos de entrada y salida, también tienen una gran importancia en la seguridad informática, ya que deben proteger los datos y sistemas contra virus, malware y otros tipos de ataques y por esta razón deben estar constantemente actualizándose para garantizar la seguridad de los usuarios, por lo que, el sistema operativo es una pieza clave y su correcto funcionamiento es fundamental para el desempeño y la seguridad del dispositivo en el que se ejecuta."
+  "ConclusionFinal": {
+    "Conclusion": "Un sistema operativo es un software fundamental para el funcionamiento de una computadora ya que se encarga de gestionar los recursos del sistema, permitiendo a los usuarios interactuar con la computadora de manera eficiente y efectiva, entre las principales funciones de un SO se encuentran la gestión de la memoria, la administración del procesamiento y la gestión de los dispositivos de entrada y salida, también tienen una gran importancia en la seguridad informática, ya que deben proteger los datos y sistemas contra virus, malware y otros tipos de ataques y por esta razón deben estar constantemente actualizándose para garantizar la seguridad de los usuarios, por lo que, el sistema operativo es una pieza clave y su correcto funcionamiento es fundamental para el desempeño y la seguridad del dispositivo en el que se ejecuta."
   }
 }
