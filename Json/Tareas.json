@@ -77,37 +77,37 @@
     {
       "NumActividad": "1",
       "Titulo": "Archivo por lotes",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación vimos que es el procesamiento por lotes, como funcionan los archivos BAT y cuales son los conceptos más comunes sobre los sistemas operativos."
     },
     {
       "NumActividad": "3",
       "Titulo": "Kbhit",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación exploramos algunas mejoras a tecnologías y técnicas que habíamos estudiado, como el uso de funciones para captar teclado, el procesamiento por lotes multiprogramado y sus técnicas descendientes."
     },
     {
       "NumActividad": "5",
       "Titulo": "Diagrama y transiciones",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación exploramos algunos de los conceptos contenidos en el contexto de los planificadores, como lo es su clasificación, que políticas de planificación existen, qué datos se recopilan de los procesos, etc."
     },
     {
       "NumActividad": "7",
       "Titulo": "Hilos posix",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación vimos varios algoritmos de planificación, como SJF, RR, SRTF, uso de múltiples colas, etc. También vimos la técnica de programación por Hilos."
     },
     {
       "NumActividad": "9",
       "Titulo": "Filósofos, productor, lectores",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación vimos los problemas de concurrencia y los recursos con los que se cuentan para evitarlos, por ejemplo los algoritmos de sincronización productor-consumidor, la cena de los filósofos, la exclusión mutua, el uso de semáforos, etc."
     },
     {
       "NumActividad": "11",
       "Titulo": "Técnicas memoria",
-      "Descripcion": ""
+      "Descripcion": "En esta investigación vimos algunas de las técnicas que se emplean para administrar la memoria, como lo es la paginación, la segmentación, la partición estática o dinámica, etc."
     },
     {
       "NumActividad": "13",
       "Titulo": "Criptografía",
-      "Descripcion": ""
+      "Descripcion": "En esta última investigación vimos diversos tópicos, enfocados principalmente a la protección de la información a la hora de almacenarla en un sistema."
     }
   ],
 
