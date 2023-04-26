@@ -502,8 +502,14 @@ class Ui_MainWindow(object):
         try:
             return shared_queue.index('🍔')
         except:
-            return -1    
-        
+            return -1 
+    #Funcion auxiliar para limpiar las casillas
+    def LimpiarCasillas(self):
+        global shared_queue
+        for i in range (1,23):
+           operacion="self.Contenedor_"+str(i)+".setStyleSheet(';')"
+           eval(operacion) 
+    
     """
     Aqui buscamos la posicion desde donde empezaremos a consumir, localizando donde comienzan las 
     hamburguesas despues de los espacios vacios   |comenzamos de aqui
@@ -521,7 +527,7 @@ class Ui_MainWindow(object):
                 #En caso de que no se encontrara ninguna hamburguesa de la forma anterior, ahora si buscamos alguna desde el inicio
                 return shared_queue.index('🍔',0)
             except:
-                return indice
+                return -1
     # Creamos una variable de condición para que el productor espere cuando la cola esté llena
     condition = threading.Condition()
     
@@ -530,10 +536,9 @@ class Ui_MainWindow(object):
         global indice
         while not stop_event.is_set():
             # Esperamos un tiempo aleatorio antes de producir un elemento
-            time.sleep(2)
-            
+            time.sleep(random.randint(0, 1))
             # Consideramos una cantidad aleatoria de elementos a agregar a la cola
-            numeroItems = random.randint(1, 6)
+            numeroItems = random.randint(3, 6)
             
             # Bloqueamos la cola compartida con la variable de condición
             with self.condition:
@@ -541,17 +546,26 @@ class Ui_MainWindow(object):
                 while (self.HayBerenjenas()) == -1:
                     self.condition.wait()
                 _translate = QtCore.QCoreApplication.translate
-                self.descripcion1.setStyleSheet('border: 2px solid rgb(0, 255, 0);')
-                self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))  
+                self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))
                 self.descripcion2.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                self.descripcion1.setText(_translate("MainWindow", "Produciendo"))
+                self.descripcion1.setStyleSheet('border: 2px solid rgb(0, 255, 0);')
                 # Agregamos los N items a la cola
                 for i in range (numeroItems):
                     #En caso de que haya una hamburguesa en el indice actual, terminamos de colocar
                     #hamburguesas, dado que esto indicaria que ya está llena la cola
                     if (shared_queue[indice]=='🍔') or stop_event.is_set():
-                        self.descripcion1.setText(_translate("MainWindow", "Intentando\nproducir"))
-                        self.descripcion1.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
-                        time.sleep(2)
+                        if(not stop_event.is_set()):
+                            self.descripcion1.setText(_translate("MainWindow", "Intentando\nproducir"))
+                            self.descripcion1.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
+                            time.sleep(2)
+                        elif (stop_event.is_set()):
+                            self.Titulo.setText(_translate("MainWindow", "Programa finalizado"))
+                            self.descripcion1.setText(_translate("MainWindow", "Durmiendo"))
+                            self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))
+                            self.descripcion1.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                            self.descripcion2.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                            self.LimpiarCasillas()
                         break
                     #Cambiamos una apestosa berenjena por una deliciosa cangreburguer
                     shared_queue[indice]='🍔'
@@ -575,10 +589,10 @@ class Ui_MainWindow(object):
         global indice2,indice
         while not stop_event.is_set():
             # Esperamos un tiempo aleatorio antes de intentar consumir un elemento
-            time.sleep(2)
+            time.sleep(random.randint(0,1))
             
             # Consideramos una cantidad aleatoria de elementos a quitar de la cola
-            numeroItems = random.randint(1, 6)
+            numeroItems = random.randint(3, 6)
             
             # Bloqueamos la cola compartida con la variable de condición
             with self.condition:
@@ -605,9 +619,17 @@ class Ui_MainWindow(object):
                     #SI de donde estamos ya hay una berenjena, nos detenemos, dado que esto significa que
                     #No hay kangreburguers para consumir
                     if (shared_queue[indice2]=='🍆' or stop_event.is_set()):
-                        self.descripcion2.setText(_translate("MainWindow", "Intentando\nconsumir"))
-                        self.descripcion2.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
-                        time.sleep(2)
+                        if(not stop_event.is_set()):
+                            self.descripcion2.setText(_translate("MainWindow", "Intentando\nconsumir"))
+                            self.descripcion2.setStyleSheet('border: 2px solid rgb(255, 255, 0);')
+                            time.sleep(2)
+                        elif (stop_event.is_set()):
+                            self.Titulo.setText(_translate("MainWindow", "Programa finalizado"))
+                            self.descripcion1.setText(_translate("MainWindow", "Durmiendo"))
+                            self.descripcion2.setText(_translate("MainWindow", "Durmiendo"))
+                            self.descripcion1.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                            self.descripcion2.setStyleSheet('border: 2px solid rgb(225, 131, 0);')
+                            self.LimpiarCasillas()
                         break
                     #Cambiamos una hamburguesa por una sucia berenjena
                     shared_queue[indice2]='🍆'
